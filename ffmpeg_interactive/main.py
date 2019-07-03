@@ -48,8 +48,8 @@ def make_args(in_file: str, out_file: str, from_time: str, to_time: str):
 def run():
     in_file = sys.argv[1]
     from_time = input('Cut from (HH:MM:SS.xxx): ')
-    to_time = input('Cut to (may be blank):     ')
-    out_file = input('Output file name:         ')
+    to_time = input('Cut to (may be blank):   ')
+    out_file = input('Output file name:        ')
 
     args = make_args(in_file, out_file, from_time, to_time)
     p = subprocess.Popen(' '.join(args))
