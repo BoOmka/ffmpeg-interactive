@@ -54,6 +54,7 @@ def run():
     args = make_args(in_file, out_file, from_time, to_time)
     subprocess.Popen(args)
 
+    print('Press any key to continue...')
     msvcrt.getch()
 
 
