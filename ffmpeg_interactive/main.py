@@ -52,9 +52,10 @@ def run():
     out_file = input('Output file name:         ')
 
     args = make_args(in_file, out_file, from_time, to_time)
-    subprocess.Popen(args)
+    p = subprocess.Popen(' '.join(args))
+    p.wait()
 
-    print('Press any key to continue...')
+    print('\nPress any key to continue...')
     msvcrt.getch()
 
 
