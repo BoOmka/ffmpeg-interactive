@@ -1,24 +1,21 @@
-import datetime as dt
 import msvcrt
 import subprocess
 import sys
 
-from dateutil import parser
+from util import (
+    add_extension,
+    format_time,
+    format_timedelta,
+    get_duration,
+    parse_time,
+)
 
-from ffmpeg_interactive.util import add_missing_colons
-from util import add_extension, format_time, format_timedelta, get_duration
 
-
+# Keys are for sorting (the least is the first)
 DEFAULT_ARGS = {
     0: 'ffmpeg',
     40: '-c copy',
 }
-
-
-def parse_time(time_str: str) -> dt.time:
-    time_str = add_missing_colons(time_str)
-    dt_obj = parser.parse(time_str)
-    return dt_obj.time()
 
 
 def make_args(in_file: str, out_file: str, from_time: str, to_time: str):

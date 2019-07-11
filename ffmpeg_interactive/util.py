@@ -1,5 +1,7 @@
 import datetime as dt
 
+from dateutil import parser
+
 
 VIDEO_EXTENSIONS = {'mp4', 'avi', 'wmv', 'mkv', }
 DEFAULT_EXTENSION = 'mp4'
@@ -37,3 +39,9 @@ def get_duration(start_time: dt.time, end_time: dt.time) -> dt.timedelta:
     if duration_seconds <= 0:
         raise ValueError('Duration must be positive')
     return dt.timedelta(seconds=duration_seconds)
+
+
+def parse_time(time_str: str) -> dt.time:
+    time_str = add_missing_colons(time_str)
+    dt_obj = parser.parse(time_str)
+    return dt_obj.time()
