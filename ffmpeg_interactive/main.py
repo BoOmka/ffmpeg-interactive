@@ -1,4 +1,5 @@
 import msvcrt
+import os
 import subprocess
 import sys
 
@@ -8,6 +9,7 @@ from util import (
     format_timedelta,
     get_duration,
     parse_time,
+    split_path,
 )
 
 
@@ -47,6 +49,10 @@ def run():
     from_time = input('Cut from (HH:MM:SS.xxx): ')
     to_time = input('Cut to (may be blank):   ')
     out_file = input('Output file name:        ')
+
+    # cd, so we don't end up in system32...
+    working_dir, _ = split_path(in_file)
+    os.chdir(working_dir)
 
     args = make_args(in_file, out_file, from_time, to_time)
     p = subprocess.Popen(' '.join(args))

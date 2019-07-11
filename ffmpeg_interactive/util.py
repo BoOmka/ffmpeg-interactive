@@ -45,3 +45,16 @@ def parse_time(time_str: str) -> dt.time:
     time_str = add_missing_colons(time_str)
     dt_obj = parser.parse(time_str)
     return dt_obj.time()
+
+
+def split_path(path: str) -> (str, str):
+    """Return path to directory and file name"""
+    path = path.replace('/', '\\')
+    try:
+        dir_path, filename = path.rsplit('\\', maxsplit=1)
+    except ValueError:
+        raise ValueError(
+            'path must be valid absolute file path '
+            '(i.e. starting with drive letter and ending with file name'
+        )
+    return dir_path, filename
