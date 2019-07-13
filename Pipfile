@@ -9,6 +9,7 @@ pytest = "*"
 [packages]
 dateutils = "*"
 ffmpeg-python = "*"
+click = "*"
 
 [requires]
 python_version = "3.7"
