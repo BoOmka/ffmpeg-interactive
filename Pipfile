@@ -10,6 +10,7 @@ pytest = "*"
 dateutils = "*"
 ffmpeg-python = "*"
 click = "*"
+colorama = "*"
 
 [requires]
 python_version = "3.7"

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "76dc51bf2f9c4066905ff8080e14ff56604ad56157cc23ac7630d069b03f1bcb"
+            "sha256": "61484b13b9b4cc58519669a804943ad7844fc57e613203bd04c6398bdf84c479"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -30,6 +30,14 @@
             ],
             "index": "pypi",
             "version": "==7.0"
+        },
+        "colorama": {
+            "hashes": [
+                "sha256:05eed71e2e327246ad6b38c540c4a3117230b19679b875190486ddd2d721422d",
+                "sha256:f8ac84de7840f5b9c4e3347b3c1eaa50f7e49c2b07596221daec5edaabbd7c48"
+            ],
+            "index": "pypi",
+            "version": "==0.4.1"
         },
         "dateutils": {
             "hashes": [
@@ -94,7 +102,7 @@
                 "sha256:05eed71e2e327246ad6b38c540c4a3117230b19679b875190486ddd2d721422d",
                 "sha256:f8ac84de7840f5b9c4e3347b3c1eaa50f7e49c2b07596221daec5edaabbd7c48"
             ],
-            "markers": "sys_platform == 'win32'",
+            "index": "pypi",
             "version": "==0.4.1"
         },
         "importlib-metadata": {

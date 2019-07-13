@@ -1,6 +1,6 @@
 import typing as t
 
-from util import add_extension, format_time, format_timedelta, get_duration, parse_time
+from util import add_extension, format_time, format_timedelta, get_duration, parse_time, split_path, get_extension
 
 
 # Keys are for sorting (the least is the first)
@@ -31,7 +31,9 @@ def make_ffmpeg_args(in_file: str, out_file: str, from_time: str, to_time: str) 
         duration_formatted = format_timedelta(get_duration(from_time, to_time))
         args[30] = f'-to {duration_formatted}'
 
-    args[50] = f'"{add_extension(out_file)}"'
+    _, in_file_name = split_path(in_file)
+    in_file_extension = get_extension(in_file_name)
+    args[50] = f'"{add_extension(out_file, extension=in_file_extension)}"'
 
     sorted_args = tuple(v for _, v in sorted(args.items()))
 

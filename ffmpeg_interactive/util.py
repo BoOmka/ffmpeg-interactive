@@ -1,16 +1,29 @@
 import datetime as dt
+import re
 
 from dateutil import parser
+
+import exceptions
 
 
 VIDEO_EXTENSIONS = {'mp4', 'avi', 'wmv', 'mkv', }
 DEFAULT_EXTENSION = 'mp4'
+WINDOWS_PATH_RE = re.compile(r"^[a-zA-Z]:\\(((?![<>:\"/\\|?*]).)+((?<![ .])\\)?)*$")
 
 
-def add_extension(filename: str) -> str:
+def get_extension(filename: str) -> str:
+    separated_name = filename.rsplit('.', maxsplit=1)
+    if len(separated_name) > 1:
+        return separated_name[-1]
+    else:
+        return ''
+
+
+def add_extension(filename: str, extension: str = DEFAULT_EXTENSION) -> str:
+    extension = extension or DEFAULT_EXTENSION
     if filename.split('.')[-1] in VIDEO_EXTENSIONS:
         return filename
-    return f'{filename}.{DEFAULT_EXTENSION}'
+    return f'{filename}.{extension}'
 
 
 def add_missing_colons(time_str: str) -> str:
@@ -37,7 +50,7 @@ def time_to_float(time: dt.time) -> float:
 def get_duration(start_time: dt.time, end_time: dt.time) -> dt.timedelta:
     duration_seconds = time_to_float(end_time) - time_to_float(start_time)
     if duration_seconds <= 0:
-        raise ValueError('Duration must be positive')
+        raise exceptions.WrongDurationError()
     return dt.timedelta(seconds=duration_seconds)
 
 
