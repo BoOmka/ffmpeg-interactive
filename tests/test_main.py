@@ -1,6 +1,6 @@
 import pytest
 
-from main import make_args
+from ffmpeg_args import make_ffmpeg_args
 
 
 class TestMakeArgs:
@@ -30,7 +30,7 @@ class TestMakeArgs:
         )
     )
     def test_parametrized_times__returns_args(self, from_str, to_str, result_cmd):
-        result = make_args('input.mp4', 'output.mp4', from_time=from_str, to_time=to_str)
+        result = make_ffmpeg_args('input.mp4', 'output.mp4', from_time=from_str, to_time=to_str)
         assert result == result_cmd
 
     @pytest.mark.parametrize(
@@ -42,4 +42,4 @@ class TestMakeArgs:
     )
     def test_parametrized_times__raises_value_error(self, from_str, to_str):
         with pytest.raises(ValueError):
-            make_args('input.mp4', 'output.mp4', from_time=from_str, to_time=to_str)
+            make_ffmpeg_args('input.mp4', 'output.mp4', from_time=from_str, to_time=to_str)
