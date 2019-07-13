@@ -55,6 +55,6 @@ def split_path(path: str) -> (str, str):
     except ValueError:
         raise ValueError(
             'path must be valid absolute file path '
-            '(i.e. starting with drive letter and ending with file name'
+            '(i.e. starting with drive letter and ending with file name)'
         )
     return dir_path, filename
