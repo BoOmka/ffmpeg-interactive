@@ -6,6 +6,7 @@ from util import add_extension, format_time, format_timedelta, get_duration, par
 # Keys are for sorting (the least is the first)
 DEFAULT_ARGS = {
     0: 'ffmpeg',
+    1: '-hide_banner',
     40: '-c copy',
 }
 
