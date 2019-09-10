@@ -11,6 +11,7 @@ dateutils = "*"
 ffmpeg-python = "*"
 click = "*"
 colorama = "*"
+freezegun = "*"
 
 [requires]
 python_version = "3.7"
