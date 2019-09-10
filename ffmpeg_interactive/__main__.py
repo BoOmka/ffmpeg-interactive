@@ -23,6 +23,18 @@ def echo_error(msg: t.Any) -> None:
     click.echo(colorama.Fore.RED + str(msg))
 
 
+def prompt_additional_params(ctx, param, use_ffmpeg_params):
+    if not use_ffmpeg_params:
+        ctx.params['ffmpeg_params'] = ''
+        return ''
+    ffmpeg_params = ctx.params.get('ffmpeg_params')
+    if not ffmpeg_params:
+        ffmpeg_params = click.prompt('Additional ffmpeg params', default='')
+        ctx.params['ffmpeg_params'] = ffmpeg_params
+
+    return ffmpeg_params
+
+
 @click.command()
 @click.argument('in_file', type=click.STRING, callback=validate_input_path)
 @click.option('--from-time', type=click.STRING, prompt='Cut from', default=START_STR, show_default=START_STR,
@@ -31,9 +43,10 @@ def echo_error(msg: t.Any) -> None:
               help='Time to cut to (HH:MM:SS.xxx')
 @click.option('--out-file', type=click.STRING, prompt='Output filename', default='output', show_default='"output"',
               help='Output file name')
-@click.option('--ffmpeg-params', type=click.STRING, prompt='Additional params', default='', show_default='',
-              help='Additional ffmpeg params')
-def run(in_file: str, from_time: str, to_time: str, out_file: str, ffmpeg_params: str):
+@click.option('--use-ffmpeg-params', type=click.BOOL, is_flag=True, default=False, callback=prompt_additional_params,
+              help='Use additional ffmpeg params')
+@click.option('--ffmpeg-params', type=click.STRING, is_eager=True)
+def run(in_file: str, from_time: str, to_time: str, out_file: str, use_ffmpeg_params: bool, ffmpeg_params: str):
     colorama.init()
 
     # cd, so we don't end up in system32...
