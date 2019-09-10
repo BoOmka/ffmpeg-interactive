@@ -1,5 +1,6 @@
 import datetime as dt
 import re
+from functools import reduce
 
 from dateutil import parser
 
@@ -9,18 +10,7 @@ import exceptions
 VIDEO_EXTENSIONS = {'mp4', 'avi', 'wmv', 'mkv', }
 DEFAULT_EXTENSION = 'mp4'
 WINDOWS_PATH_RE = re.compile(r"^[a-zA-Z]:\\(((?![<>:\"/\\|?*]).)+((?<![ .])\\)?)*$")
-
-
-class ParserInfo(parser.parserinfo):
-    """
-    Allows for more forgiving time parse ("12:43", "12 43", "12-43", "12Ж43" are all valid timestrings)
-    """
-    HMS = [("h", "hour", "hours"),
-           ("m", "minute", "minutes", " ", "-", "ж"),
-           ("s", "second", "seconds")]
-
-
-parserinfo = ParserInfo()
+TIME_DIVIDERS = {' ', '-', 'Ж', 'ж'}
 
 
 def get_extension(filename: str) -> str:
@@ -67,8 +57,10 @@ def get_duration(start_time: dt.time, end_time: dt.time) -> dt.timedelta:
 
 
 def parse_time(time_str: str) -> dt.time:
+    time_str = reduce(lambda string, char: string.replace(char, ':'), TIME_DIVIDERS, time_str)
     time_str = add_missing_colons(time_str)
-    dt_obj = parser.parse(time_str, parserinfo=parserinfo)
+
+    dt_obj = parser.parse(time_str)
     return dt_obj.time()
 
 
