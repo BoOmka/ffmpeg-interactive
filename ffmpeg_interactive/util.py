@@ -11,6 +11,18 @@ DEFAULT_EXTENSION = 'mp4'
 WINDOWS_PATH_RE = re.compile(r"^[a-zA-Z]:\\(((?![<>:\"/\\|?*]).)+((?<![ .])\\)?)*$")
 
 
+class ParserInfo(parser.parserinfo):
+    """
+    Allows for more forgiving time parse ("12:43", "12 43", "12-43", "12Ж43" are all valid timestrings)
+    """
+    HMS = [("h", "hour", "hours"),
+           ("m", "minute", "minutes", " ", "-", "ж"),
+           ("s", "second", "seconds")]
+
+
+parserinfo = ParserInfo()
+
+
 def get_extension(filename: str) -> str:
     separated_name = filename.rsplit('.', maxsplit=1)
     if len(separated_name) > 1:
@@ -56,7 +68,7 @@ def get_duration(start_time: dt.time, end_time: dt.time) -> dt.timedelta:
 
 def parse_time(time_str: str) -> dt.time:
     time_str = add_missing_colons(time_str)
-    dt_obj = parser.parse(time_str)
+    dt_obj = parser.parse(time_str, parserinfo=parserinfo)
     return dt_obj.time()
 
 
